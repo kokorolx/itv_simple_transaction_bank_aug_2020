@@ -1,7 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe Account, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "association" do
+    it { should belong_to(:user) }
+    it { should have_many(:transactions) }
+  end
+
+  it "valid bank?" do
+    should define_enum_for(:bank).
+      with_values(
+        vcb: "VCB", acb: "ACB", vib: "VIB"
+      ).
+      backed_by_column_of_type(:string)
+  end
+
+  describe "valid?" do
+    it { should validate_presence_of(:address) }
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:bank) }
+  end
+
 end
 
 # == Schema Information

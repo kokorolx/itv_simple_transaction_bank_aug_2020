@@ -1,5 +1,9 @@
 class Transaction < ApplicationRecord
   belongs_to :account
+  enum transaction_type: { withdraw: "withdraw", deposit: "deposit" }
+
+  validates :amount, presence: true, numericality: { greater_than: 0 }
+  validates :transaction_type, presence: true
 end
 
 # == Schema Information

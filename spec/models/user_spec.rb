@@ -1,9 +1,15 @@
-class Account < ApplicationRecord
-  belongs_to :user
-  has_many :transactions
-  enum bank: { vcb: "VCB", acb: "ACB", vib: "VIB" }
+require 'rails_helper'
 
-  validates :address, :name, :bank, presence: true
+RSpec.describe User, type: :model do
+  describe "association" do
+    it { should have_many(:accounts) }
+  end
+
+  describe "valid?" do
+    it { should validate_presence_of(:email) }
+    it { should validate_presence_of(:password) }
+  end
+
 end
 
 # == Schema Information

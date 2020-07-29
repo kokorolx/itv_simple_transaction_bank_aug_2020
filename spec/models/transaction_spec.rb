@@ -1,7 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe Transaction, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "association" do
+    it { should belong_to(:account) }
+  end
+
+  it "valid transaction_type?" do
+    should define_enum_for(:transaction_type).
+      with_values(
+        withdraw: "withdraw", deposit: "deposit"
+      ).
+      backed_by_column_of_type(:string)
+  end
+
+  describe "valid?" do
+    it { should validate_presence_of(:amount) }
+    it { should validate_presence_of(:transaction_type) }
+    it { should validate_numericality_of(:amount).is_greater_than(0) }
+  end
+
+
 end
 
 # == Schema Information
