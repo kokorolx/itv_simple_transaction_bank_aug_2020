@@ -1,18 +1,16 @@
-p#notice = notice
+.card.p-3.m-3
+  p#notice.text-success = notice
 
-p
-  strong Name:
-  = @account.name
-p
-  strong Address:
-  = @account.address
-p
-  strong Bank:
-  = @account.bank
-p
-  strong User:
-  = @account.user
+  p
+    strong Name:
+    = @account.name
+  p
+    strong Address:
+    = @account.address
+  p
+    strong Bank:
+    = @account.bank
 
-=> link_to 'Edit', edit_account_path(@account)
-'|
-=< link_to 'Back', accounts_path
+  => link_to 'Edit', edit_account_path(@account)
+  '|
+  =< link_to 'Back', accounts_path

@@ -63,4 +63,5 @@ gem 'simple_form'
 gem "slim-rails"
 
 gem 'devise'
-
+gem 'kaminari'
+gem 'bootstrap4-kaminari-views'

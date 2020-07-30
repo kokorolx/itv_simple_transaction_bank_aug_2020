@@ -1,19 +1,10 @@
 = simple_form_for @account, html: {class: "form-group"}  do |f|
-  - if @account.errors.any?
-    #bg-warning
-      h2 = "#{pluralize(@account.errors.count, "error")} prohibited this account from being saved:"
-      ul
-        - @account.errors.full_messages.each do |message|
-          li = message
-
   .field
-    = f.label :name
-    = f.text_field :name, class: "form-control"
+    = f.input :name, class: "form-control"
   .field
-    = f.label :address
-    = f.text_field :address, class: "form-control"
+    = f.input :address, class: "form-control"
   .field
-    = f.label :bank
-    = f.select :bank, Account::banks.map{|key, value| [value, key]}, input_html: {class: "form-control"}
+    = f.input :bank, collection: Account::banks.map{|key, value| [value, key]}, include_blank: "Select Bank", class: "form-control"
+    / = f.input :bank, as: :select, options_for_select(Account::banks.map{|key, value| [value, key]}),{ include_blank: "Select Bank" }, class: "form-control"
   .actions.mt-3
     = f.submit "Submit", class: "btn btn-primary"
