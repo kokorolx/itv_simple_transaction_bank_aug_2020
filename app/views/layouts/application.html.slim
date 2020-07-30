@@ -7,6 +7,14 @@ html
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-  body
+  body.bg-light
+    nav.navbar.flex-md-nowrap.p-0.m-3
+      a.navbar-brand.col-sm-3.col-md-2.mr-0 href="/" TamLH_1815
+      ul.navbar-nav.px-3
+        - if current_user.present?
+          li.nav-item.text-nowrap
+            = current_user.email
+          li.nav-item.text-nowrap
+            = link_to "Sign out", destroy_user_session_path, :method => :delete, class: "nav-link"
     .container
       = yield
