@@ -1,27 +1,28 @@
-h1 Listing accounts
+h1.text-center Listing accounts
 
-table
-  thead
-    tr
-      th Name
-      th Address
-      th Bank
-      th User
-      th
-      th
-      th
-
-  tbody
-    - @accounts.each do |account|
+.table-reponsive
+  table
+    thead
       tr
-        td = account.name
-        td = account.address
-        td = account.bank
-        td = account.user
-        td = link_to 'Show', account
-        td = link_to 'Edit', edit_account_path(account)
-        td = link_to 'Destroy', account, data: { confirm: 'Are you sure?' }, method: :delete
+        th Name
+        th Address
+        th Bank
+        th User
+        th
+        th
+        th
 
-br
+    tbody
+      - @accounts.each do |account|
+        tr
+          td = account.name
+          td = account.address
+          td = account.bank
+          td = account.user
+          td = link_to 'Show', account
+          td = link_to 'Edit', edit_account_path(account)
+          td = link_to 'Destroy', account, data: { confirm: 'Are you sure?' }, method: :delete
 
-= link_to 'New Account', new_account_path
+  br
+
+  = link_to 'New Account', new_account_path
