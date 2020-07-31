@@ -4,7 +4,6 @@
   .field
     = f.input :address, class: "form-control"
   .field
-    = f.input :bank, collection: Account::banks.map{|key, value| [value, key]}, include_blank: "Select Bank", class: "form-control"
-    / = f.input :bank, as: :select, options_for_select(Account::banks.map{|key, value| [value, key]}),{ include_blank: "Select Bank" }, class: "form-control"
+    = f.input :bank, collection: Account.banks.map{|key, value| [value, key]}, include_blank: "Select Bank", class: "form-control"
   .actions.mt-3
     = f.submit "Submit", class: "btn btn-primary"

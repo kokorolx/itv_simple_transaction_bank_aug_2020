@@ -1,25 +1,30 @@
-h1 Listing transactions
+.card.p-3.m-3
+  h1.text-center Listing transactions
 
-table
-  thead
-    tr
-      th Account
-      th Amount
-      th Transaction type
-      th
-      th
-      th
+  .table-reponsive
+    .text-right
+      = link_to 'New Transaction', new_account_transaction_path, class: 'btn btn-primary m-3'
+    table.table.table-bordered
+      thead
+        tr
+          th Amount
+          th Transaction type
+          th Created At
+          th[colspan="3"] Action
 
-  tbody
-    - @transactions.each do |transaction|
-      tr
-        td = transaction.account
-        td = transaction.amount
-        td = transaction.transaction_type
-        td = link_to 'Show', transaction
-        td = link_to 'Edit', edit_transaction_path(transaction)
-        td = link_to 'Destroy', transaction, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Transaction', new_transaction_path
+      tbody
+        - if @transactions.blank?
+            tr
+              td[colspan=6]
+                p.text-center.p-0.m-0 No data
+        - else
+          - @transactions.each do |transaction|
+            tr
+              td = transaction.amount
+              td = Transaction.transaction_types[transaction.transaction_type]
+              td = transaction.created_at
+              td = link_to 'Show', account_transaction_path(@account, transaction)
+              td = link_to 'Edit', edit_account_transaction_path(@account, transaction)
+              td = link_to 'Destroy', account_transaction_path(@account, transaction), data: { confirm: 'Are you sure?' }, method: :delete
+    .text-center
+      = paginate @transactions, theme: 'twitter-bootstrap-4'

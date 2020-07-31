@@ -1,15 +1,12 @@
-p#notice = notice
+.card.p-3.m-3
+  p#notice.text-center = notice
+  p
+    strong Amount:
+    = @transaction.amount
+  p
+    strong Transaction type:
+    = @transaction.transaction_type
 
-p
-  strong Account:
-  = @transaction.account
-p
-  strong Amount:
-  = @transaction.amount
-p
-  strong Transaction type:
-  = @transaction.transaction_type
-
-=> link_to 'Edit', edit_transaction_path(@transaction)
-'|
-=< link_to 'Back', transactions_path
+  => link_to 'Edit', edit_account_transaction_path(@account, @transaction)
+  '|
+  =< link_to 'Back', account_transactions_path(@account)

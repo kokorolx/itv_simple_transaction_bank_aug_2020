@@ -1,10 +1,11 @@
 class TransactionsController < ApplicationController
+  before_action :set_account
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
 
   # GET /transactions
   # GET /transactions.json
   def index
-    @transactions = Transaction.all
+    @transactions = @account.transactions.page(params[:page])
   end
 
   # GET /transactions/1
@@ -24,15 +25,17 @@ class TransactionsController < ApplicationController
   # POST /transactions
   # POST /transactions.json
   def create
-    @transaction = Transaction.new(transaction_params)
+    ActiveRecord::Base.transaction do
+      @transaction = @account.transactions.new(transaction_params)
 
-    respond_to do |format|
-      if @transaction.save
-        format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
-        format.json { render :show, status: :created, location: @transaction }
-      else
-        format.html { render :new }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @transaction.save
+          format.html { redirect_to account_transaction_path(@account, @transaction), notice: 'Transaction was successfully created.' }
+          format.json { render :show, status: :created, location: @transaction }
+        else
+          format.html { render :new }
+          format.json { render json: @transaction.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -65,6 +68,10 @@ class TransactionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction
       @transaction = Transaction.find(params[:id])
+    end
+
+    def set_account
+      @account = Account.find(params[:account_id])
     end
 
     # Only allow a list of trusted parameters through.

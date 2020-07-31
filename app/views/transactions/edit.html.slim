@@ -1,8 +1,8 @@
-h1 Editing transaction
+.card.p-3.m-3
+  h1.text-center Editing transaction
 
-== render 'form'
+  == render 'form'
 
-=> link_to 'Show', @transaction
-'|
-=< link_to 'Back', transactions_path
+  => link_to 'Show', @transaction
+  =< link_to 'Back', account_transactions_path(@account)
 
