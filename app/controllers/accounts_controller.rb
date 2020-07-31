@@ -5,13 +5,11 @@ class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   # GET /accounts
-  # GET /accounts.json
   def index
     @accounts = current_user.accounts.page(params[:page])
   end
 
   # GET /accounts/1
-  # GET /accounts/1.json
   def show
   end
 
@@ -25,46 +23,35 @@ class AccountsController < ApplicationController
   end
 
   # POST /accounts
-  # POST /accounts.json
   def create
     @account = current_user.accounts.new(account_params)
 
-    respond_to do |format|
-      if @account.save
-        format.html { redirect_to @account, notice: 'Account was successfully created.' }
-        format.json { render :show, status: :created, location: @account }
-      else
-        format.html { render :new }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
-      end
+    if @account.save
+      redirect_to @account, notice: 'Account was successfully created.'
+    else
+      render :new, alert: 'Account was unsuccessfully created.'
     end
   end
 
   # PATCH/PUT /accounts/1
-  # PATCH/PUT /accounts/1.json
   def update
-    respond_to do |format|
-      if @account.update(account_params)
-        format.html { redirect_to @account, notice: 'Account was successfully updated.' }
-        format.json { render :show, status: :ok, location: @account }
-      else
-        format.html { render :edit }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
-      end
+    if @account.update(account_params)
+      redirect_to @account, notice: 'Account was successfully updated.'
+    else
+      render :edit, alert: 'Account was unsuccessfully updated.'
     end
   end
 
   # DELETE /accounts/1
-  # DELETE /accounts/1.json
   def destroy
     ActiveRecord::Base.transaction do
-      @account.transactions.update_all(deleted_at: DateTime.current)
-      @account.soft_delete
+      result = @account.transactions.update_all(deleted_at: DateTime.current) && @account.soft_delete
     end
 
-    respond_to do |format|
-      format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
-      format.json { head :no_content }
+    if result
+      redirect_to accounts_url, notice: 'Account was successfully destroyed.'
+    else
+      redirect_to accounts_url, notice: 'Account was unsuccessfully destroyed.'
     end
   end
 

@@ -2,80 +2,66 @@ class TransactionsController < ApplicationController
   before_action :set_account
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
 
-  # GET /transactions
-  # GET /transactions.json
+  # GET /accounts/:account_id/transactions
   def index
     @transactions = @account.transactions.page(params[:page])
   end
 
-  # GET /transactions/1
-  # GET /transactions/1.json
+  # GET /accounts/:account_id/transactions/1
   def show
   end
 
-  # GET /transactions/new
+  # GET /accounts/:account_id/transactions/new
   def new
-    @transaction = Transaction.new
+    @transaction = @account.transactions.new
   end
 
-  # GET /transactions/1/edit
+  # GET /accounts/:account_id/transactions/1/edit
   def edit
   end
 
-  # POST /transactions
-  # POST /transactions.json
+  # POST /accounts/:account_id/transactions
   def create
     ActiveRecord::Base.transaction do
       @transaction = @account.transactions.new(transaction_params)
-
-      respond_to do |format|
-        if @transaction.save
-          format.html { redirect_to account_transaction_path(@account, @transaction), notice: 'Transaction was successfully created.' }
-          format.json { render :show, status: :created, location: @transaction }
-        else
-          format.html { render :new, alert: 'Transaction was unsuccessfully created.' }
-          format.json { render json: @transaction.errors, status: :unprocessable_entity }
-        end
+      if @transaction.save
+        redirect_to account_transaction_path(@account, @transaction), notice: 'Transaction was successfully created.'
+      else
+        render :new, alert: 'Transaction was unsuccessfully created.'
       end
     end
   end
 
-  # PATCH/PUT /transactions/1
-  # PATCH/PUT /transactions/1.json
+  # PATCH/PUT /accounts/:account_id/transactions/1
   def update
-    respond_to do |format|
-      ActiveRecord::Base.transaction do
-        if @transaction.update(transaction_params)
-          format.html { redirect_to account_transaction_path(@account, @transaction), notice: 'Transaction was successfully updated.' }
-          format.json { render :show, status: :ok, location: @transaction }
-        else
-          format.html { render :edit, alert: 'Transaction was unsuccessfully created.' }
-          format.json { render json: @transaction.errors, status: :unprocessable_entity }
-        end
+    ActiveRecord::Base.transaction do
+      if @transaction.update(transaction_params)
+        redirect_to account_transaction_path(@account, @transaction), notice: 'Transaction was successfully updated.'
+      else
+        render :edit, alert: 'Transaction was unsuccessfully created.'
       end
     end
   end
 
-  # DELETE /transactions/1
-  # DELETE /transactions/1.json
+  # DELETE /accounts/:account_id/transactions/1
   def destroy
     ActiveRecord::Base.transaction do
-      @transaction.soft_delete
-    end
-    respond_to do |format|
-      format.html { redirect_to account_transactions_path(@account), notice: 'Transaction was successfully destroyed.' }
-      format.json { head :no_content }
+      if @transaction.soft_delete
+        redirect_to account_transactions_path(@account), notice: 'Transaction was successfully destroyed.'
+      else
+        redirect_to account_transactions_path(@account), notice: 'Transaction was unsuccessfully destroyed.'
+      end
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction
-      @transaction = Transaction.find(params[:id])
+      @transaction = @account.transactions.find(params[:id])
     end
 
     def set_account
-      @account = Account.find(params[:account_id])
+      @account = current_user.accounts.find(params[:account_id])
     end
 
     # Only allow a list of trusted parameters through.
