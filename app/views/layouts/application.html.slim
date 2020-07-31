@@ -8,13 +8,22 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body.bg-light
-    nav.navbar.flex-md-nowrap.p-0.m-3
-      a.navbar-brand.col-sm-3.col-md-2.mr-0 href="/" TamLH_1815
-      ul.navbar-nav.px-3
-        - if current_user.present?
-          li.nav-item.text-nowrap
-            = current_user.email
-          li.nav-item.text-nowrap
-            = link_to "Sign out", destroy_user_session_path, :method => :delete, class: "nav-link"
     .container
+      nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        a.navbar-brand href="#"  1815
+        button.navbar-toggler aria-controls="navbarNav" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarNav" data-toggle="collapse" type="button"
+          span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+          ul.navbar-nav
+            li.nav-item
+              a.nav-link href="/"
+                | Home
+            li.nav-item
+              a.nav-link href="#{accounts_path}"  Account
+        ul.navbar-nav.px-3
+          - if current_user.present?
+            li.nav-item.text-nowrap
+              = current_user.email
+              = link_to "Sign out", destroy_user_session_path, :method => :delete, class: "nav-link p-0"
+      = render "share/flash_message"
       = yield

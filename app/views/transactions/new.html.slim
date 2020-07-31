@@ -1,6 +1,6 @@
 .card.p-3.m-3
   h1.text-center New transaction
-
-  == render 'form'
+  = simple_form_for @transaction, url: account_transactions_path(@account), html: {class: "form-group"}  do |f|
+    == render 'form', f: f
 
   = link_to 'Back', account_transactions_path(@account)

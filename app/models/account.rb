@@ -1,4 +1,6 @@
 class Account < ApplicationRecord
+  include ApplicationConcern
+
   belongs_to :user
   has_many :transactions
   enum bank: { vcb: "VCB", acb: "ACB", vib: "VIB" }
@@ -13,6 +15,7 @@ end
 #  id         :bigint           not null, primary key
 #  address    :string
 #  bank       :string
+#  deleted_at :datetime
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

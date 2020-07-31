@@ -1,0 +1,4 @@
+- if flash[:notice].present?
+  .card.p-3.m-3.text-success.text-center = flash[:notice]
+- if flash[:alert].present?
+  .card.p-3.m-3.text-danger.text-center = flash[:alert]

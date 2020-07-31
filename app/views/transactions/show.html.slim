@@ -1,5 +1,5 @@
 .card.p-3.m-3
-  p#notice.text-center = notice
+  h1.text-center Transaction Details
   p
     strong Amount:
     = @transaction.amount
@@ -8,5 +8,4 @@
     = @transaction.transaction_type
 
   => link_to 'Edit', edit_account_transaction_path(@account, @transaction)
-  '|
   =< link_to 'Back', account_transactions_path(@account)

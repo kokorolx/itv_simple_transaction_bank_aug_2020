@@ -1,5 +1,6 @@
 class AccountsController < ApplicationController
   load_and_authorize_resource
+  skip_authorize_resource only: %i[new create]
 
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
@@ -56,7 +57,11 @@ class AccountsController < ApplicationController
   # DELETE /accounts/1
   # DELETE /accounts/1.json
   def destroy
-    @account.destroy
+    ActiveRecord::Base.transaction do
+      @account.transactions.update_all(deleted_at: DateTime.current)
+      @account.soft_delete
+    end
+
     respond_to do |format|
       format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
       format.json { head :no_content }

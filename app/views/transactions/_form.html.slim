@@ -1,8 +1,10 @@
-= simple_form_for @transaction, url: account_transactions_path(account_id: @account.id), html: {class: "form-group"}  do |f|
 
-  .field
-    = f.input :amount, class: "form-control"
-  .field
-    = f.input :transaction_type, collection: Transaction.transaction_types.map{|key, value| [value.camelcase, key]}, include_blank: "Select Type", class: "form-control"
-  .actions.mt-3
-    = f.submit "Submit", class: "btn btn-primary"
+p
+  | Transaction for account:
+  strong = " #{@account.name}"
+.field
+  = f.input :amount, class: "form-control"
+.field
+  = f.input :transaction_type, collection: Transaction.transaction_types.map{|key, value| [value.camelcase, key]}, include_blank: "Select Type", class: "form-control"
+.actions.mt-3
+  = f.submit "Submit", class: "btn btn-primary"

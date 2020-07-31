@@ -1,4 +1,6 @@
 class Transaction < ApplicationRecord
+  include ApplicationConcern
+
   belongs_to :account
   enum transaction_type: { withdraw: "withdraw", deposit: "deposit" }
 
@@ -12,6 +14,7 @@ end
 #
 #  id               :bigint           not null, primary key
 #  amount           :decimal(, )
+#  deleted_at       :datetime
 #  transaction_type :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null

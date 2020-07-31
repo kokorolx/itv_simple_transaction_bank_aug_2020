@@ -1,6 +1,5 @@
 .card.p-3.m-3
-  p#notice.text-success = notice
-
+  h1.text-center Account Details
   p
     strong Name:
     = @account.name
@@ -13,5 +12,4 @@
 
   => link_to 'Edit', edit_account_path(@account)
   =< link_to 'Back', accounts_path
-  |'
-  =< link_to 'Transactions', account_transactions_path(@account)
+  =< link_to 'Go to Transactions', account_transactions_path(@account)

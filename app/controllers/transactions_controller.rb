@@ -33,7 +33,7 @@ class TransactionsController < ApplicationController
           format.html { redirect_to account_transaction_path(@account, @transaction), notice: 'Transaction was successfully created.' }
           format.json { render :show, status: :created, location: @transaction }
         else
-          format.html { render :new }
+          format.html { render :new, alert: 'Transaction was unsuccessfully created.' }
           format.json { render json: @transaction.errors, status: :unprocessable_entity }
         end
       end
@@ -44,12 +44,14 @@ class TransactionsController < ApplicationController
   # PATCH/PUT /transactions/1.json
   def update
     respond_to do |format|
-      if @transaction.update(transaction_params)
-        format.html { redirect_to @transaction, notice: 'Transaction was successfully updated.' }
-        format.json { render :show, status: :ok, location: @transaction }
-      else
-        format.html { render :edit }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+      ActiveRecord::Base.transaction do
+        if @transaction.update(transaction_params)
+          format.html { redirect_to account_transaction_path(@account, @transaction), notice: 'Transaction was successfully updated.' }
+          format.json { render :show, status: :ok, location: @transaction }
+        else
+          format.html { render :edit, alert: 'Transaction was unsuccessfully created.' }
+          format.json { render json: @transaction.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -57,9 +59,11 @@ class TransactionsController < ApplicationController
   # DELETE /transactions/1
   # DELETE /transactions/1.json
   def destroy
-    @transaction.destroy
+    ActiveRecord::Base.transaction do
+      @transaction.soft_delete
+    end
     respond_to do |format|
-      format.html { redirect_to transactions_url, notice: 'Transaction was successfully destroyed.' }
+      format.html { redirect_to account_transactions_path(@account), notice: 'Transaction was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

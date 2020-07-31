@@ -12,6 +12,7 @@ end
 #
 #  id               :bigint           not null, primary key
 #  amount           :decimal(, )
+#  deleted_at       :datetime
 #  transaction_type :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null

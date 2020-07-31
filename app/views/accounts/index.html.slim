@@ -10,6 +10,7 @@
           th Name
           th Address
           th Bank
+          th Transactions
           th[colspan="3"] Action
 
       tbody
@@ -23,6 +24,7 @@
               td = account.name
               td = account.address
               td = Account::banks[account.bank]
+              td = link_to 'List Transactions', account_transactions_path(account)
               td = link_to 'Show', account
               td = link_to 'Edit', edit_account_path(account)
               td = link_to 'Destroy', account, data: { confirm: 'Are you sure?' }, method: :delete
