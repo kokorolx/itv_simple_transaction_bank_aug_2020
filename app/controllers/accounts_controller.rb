@@ -1,4 +1,4 @@
-class AccountsController < ApplicationController
+class AccountsController < BaseController
   load_and_authorize_resource
   skip_authorize_resource only: %i[new create]
 
@@ -6,6 +6,7 @@ class AccountsController < ApplicationController
 
   # GET /accounts
   def index
+
     @accounts = current_user.accounts.page(params[:page])
   end
 

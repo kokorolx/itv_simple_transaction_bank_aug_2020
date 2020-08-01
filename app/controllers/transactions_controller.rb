@@ -1,4 +1,4 @@
-class TransactionsController < ApplicationController
+class TransactionsController < BaseController
   before_action :set_account
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
 
