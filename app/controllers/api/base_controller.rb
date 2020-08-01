@@ -7,8 +7,10 @@ class Api::BaseController < ActionController::Base
   rescue_from StandardError, with: :standard_error
 
   def standard_error(exception)
-    data = { message: exception.message }
-    response_struct(data: data, http_status: 400)
+    Rails.logger.error data = { message: "Internal Server Error" }
+    Rails.logger.error error_id = SecureRandom.hex
+    Rails.logger.error exception.backtrace.first(10).join("\n")
+    response_struct(data: data, http_status: 500, error_id: error_id)
   end
 
 
@@ -40,6 +42,7 @@ class Api::BaseController < ActionController::Base
   private
 
   def response_struct(data: nil, message: 'Successfully', status: 200, http_status: :ok, error_id: nil)
+    data[:error_id] = error_id if error_id.present?
     render json: data.to_json, status: http_status
   end
 end

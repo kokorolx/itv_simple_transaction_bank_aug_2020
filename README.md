@@ -5,9 +5,9 @@ Create a web application that uses:
 - Database: MySQL or PostgreSQL
 
 The web application has 4 functions:
-  - Authentication 
-  - Management screens 
-  - APIs 
+  - Authentication
+  - Management screens
+  - APIs
   - Tests *(optional but nice to have)*
 
 **Notes**:
@@ -51,7 +51,7 @@ Users can CRUD only their own accounts and transactions.
 #### 2.1 Account management screens
 
 - Create CRUD screens for account management
-   
+
 **Notes:**
   - No need to show transactions on account management screens.
   - All input fields are required.
@@ -62,7 +62,7 @@ Users can CRUD only their own accounts and transactions.
 
 **Notes:**
   - All input fields are required.
- 
+
 ### 3. APIs
 
 #### 3.1 Get transactions of a user
@@ -78,7 +78,7 @@ Users can CRUD only their own accounts and transactions.
     - Note: When `account_id` is not specified, return all transactions of the user.
 
 - Response:
-    - Content type: `application/json` 
+    - Content type: `application/json`
     - HTTP status: `200 OK`
     - Body: Array of user's transactions, each of which has the following fields:
 
@@ -123,7 +123,7 @@ Users can CRUD only their own accounts and transactions.
         | `transaction_type`|Yes |String| Type of transaction |
 
 - Response:
-    - Content type: `application/json` 
+    - Content type: `application/json`
     - HTTP status: `201 Created`
     - Body: Details of the created transaction with the following fields:
 
@@ -144,7 +144,7 @@ Users can CRUD only their own accounts and transactions.
       "amount": 100000.00,
       "transaction_type": "deposit"
     }
-     ```  
+     ```
   - Response
     ```json
     {
@@ -161,3 +161,16 @@ Users can CRUD only their own accounts and transactions.
 
 - Write unit tests for management screens
 - Write unit tests for APIs
+
+#######################
+# How to install
+## Ruby version: 2.5.3
+## Rails version: 6.0.3
+## PostgreSQL version: 12
+
+# Step
+1. gem install bundle
+2. bundle install -j 4
+3. rake db:create db:migrate
+
+

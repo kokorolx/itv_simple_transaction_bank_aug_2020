@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :transaction do
     account { create(:account) }
     amount { "9.99" }
-    transaction_type { "MyString" }
+    transaction_type { "withdraw" }
   end
 end
 

@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :account do
     name { "MyString" }
     address { "MyString" }
-    bank { "MyString" }
+    bank { "vcb" }
     user { create(:user) }
   end
 end
