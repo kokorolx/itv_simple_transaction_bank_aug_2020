@@ -66,3 +66,4 @@ gem 'devise'
 gem 'kaminari'
 gem 'bootstrap4-kaminari-views'
 gem 'cancancan'
+gem "active_model_serializers", "~> 0.10.0"
