@@ -1,4 +1,6 @@
-class TransactionsController < BaseController
+class TransactionsController < ApplicationController
+  before_action :authenticate_user!
+
   before_action :set_account
   before_action :set_transaction, only: [:show, :edit, :update, :destroy]
 
