@@ -11,7 +11,7 @@ class Api::TransactionsController < Api::BaseController
     ActiveRecord::Base.transaction do
       transaction = account.transactions.new(transaction_params)
       if transaction.save
-        render_success(data: transaction, serializer: Api::TransactionSerializer)
+        render_success(data: transaction, serializer: Api::TransactionSerializer, http_status: :created)
       else
         render :new, alert: 'Transaction was unsuccessfully created.'
       end
