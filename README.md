@@ -175,4 +175,8 @@ Users can CRUD only their own accounts and transactions.
 2. bundle install -j 4
 3. rake db:create db:migrate
 
+## Run test
+1. bundle
+2. rspec
+
 
