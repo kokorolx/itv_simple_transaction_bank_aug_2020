@@ -28,6 +28,6 @@ jobs:
       with:
         ruby-version: 2.5.3
     - name: Install dependencies
-      run: gem install bundle && bundle install
+      run: gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)" && bundle install
     - name: Run tests
       run: bundle exec rpsec
